@@ -6,7 +6,7 @@
 body {
   margin: auto;
   padding: 0%;
-  background-image: url("bcg.png");
+  background-image: url("../img/bcg.png");
   background-color: #e8e8e4;
   background-repeat: no-repeat;
   background-attachment: fixed;
