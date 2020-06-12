@@ -6,7 +6,7 @@
 body {
   margin: auto;
   padding: 0%;
-  background-image: url("bcg.png");
+  background-image: url("../img/bcg.png");
   background-color: #e8e8e4;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -124,6 +124,7 @@ i {
 .detail-btn-square {
   margin: 0 auto;
   width: 350px;
+  height: 30px;
   /* background-color: lightgray; */
   margin-top: 100px;
 }
@@ -176,4 +177,18 @@ option {
   font-weight: bold;
   text-align: center;
   padding-top: 70px;
+}
+
+#chartContainer{
+  margin: 0 auto;
+  margin-top: 30px;
+  width: 80%;
+  background-color: aqua;
+}
+
+#chartContainer{
+  margin: 0 auto;
+  margin-top: 30px;
+  width: 80%;
+  background-color: aqua;
 }
