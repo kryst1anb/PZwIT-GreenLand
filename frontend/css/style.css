@@ -72,7 +72,7 @@ i {
 }
 
 .errorParagraph {
-  color: red;
+  color: #b30000;;
   font-weight: bold;
   text-align: center;
   margin-top: 15px;
@@ -173,7 +173,7 @@ option {
 } */
 
 .errorHandler {
-  color: red;
+  color: #b30000;;
   font-weight: bold;
   text-align: center;
   padding-top: 70px;
@@ -191,4 +191,23 @@ option {
   margin-top: 30px;
   width: 80%;
   background-color: aqua;
+}
+
+/* STATEMENTS (errors, first log) */
+
+.errorHandlerFirstLog{
+  color: #4a3b06;
+  text-align: center;
+  font-size: 19px;
+  font-weight: bold;
+  /* display: block;
+  float: left; */
+}
+
+.errors-info-square {
+  margin: 0 auto;
+  width: 700px;
+  /* height: 30px; */
+  /* background-color: lightgray; */
+  margin-top: 100px;
 }
