@@ -45,9 +45,8 @@
         curl_close($ch);
         sleep(3600);
       }
-     } else
-       {
-           header("Location: http://www.google.com");
-           exit();
-       }
+    } else {
+        header("Location: http://www.google.com");
+         exit();
+    }
 ?>
