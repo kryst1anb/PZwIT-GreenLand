@@ -158,8 +158,8 @@ function sendJSON() {
     });
 }
 
-function checkData() {
-  (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
+function checkData(data) {
+  return (data < 10 ? "0" : "") + data;
 }
 
 function errorHandler(errorList) {
@@ -169,22 +169,17 @@ function errorHandler(errorList) {
     const para = document.createElement("p");
     para.className = "errorHandler";
     const node = document.createTextNode(
-      (date.getDay() < 10 ? "0" : "") +
-        date.getDay() +
+      checkData(date.getDay()) +
         "-" +
-        (date.getMonth() < 10 ? "0" : "") +
-        date.getMonth() +
+        checkData(date.getMonth()) +
         "-" +
         date.getFullYear() +
         " " +
-        (date.getHours() < 10 ? "0" : "") +
-        date.getHours() +
+        checkData(date.getHours()) +
         ":" +
-        (date.getMinutes() < 10 ? "0" : "") +
-        date.getMinutes() +
+        checkData(date.getMinutes()) +
         ":" +
-        (date.getSeconds() < 10 ? "0" : "") +
-        date.getSeconds() +
+        checkData(date.getSeconds()) +
         " Error: " +
         error.error.code +
         " " +
