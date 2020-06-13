@@ -158,7 +158,16 @@ function sendJSON() {
 }
 
 function errorHandler(errorList) {
-  errorList.forEach((error) => {
+  var dups = [];
+  var arr = errorList.filter(function (el) {
+    if (dups.indexOf(el.ID) == -1) {
+      dups.push(el.ID);
+      return true;
+    }
+    return false;
+  });
+
+  arr.forEach((error) => {
     const para = document.createElement("p");
     para.className = "errorHandler";
     const node = document.createTextNode("Error: " + error.error.code + " " + error.error.message);
