@@ -1,4 +1,5 @@
 window.onload = function () {
+  document.getElementById("errorHandlerMessagesContainer").style.display = "none";
   checkAPIKey();
   checkFirstLog();
   sendJSON();
@@ -158,10 +159,16 @@ function sendJSON() {
 }
 
 function errorHandler(errorList) {
+  document.getElementById("errorHandlerMessagesContainer").style.display = "block";
   errorList.forEach((error) => {
+    let date = new Date(error.date * 1000);
     const para = document.createElement("p");
     para.className = "errorHandler";
-    const node = document.createTextNode("Error: " + error.error.code + " " + error.error.message);
+    const node = document.createTextNode(
+        date.getDay() + "-" + date.getMonth() + "-" + date.getFullYear() +  " " +
+        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() +
+        " Error: " + error.error.code + " " + error.error.message
+    );
     para.appendChild(node);
     document.getElementsByClassName("error-handler")[0].appendChild(para);
   });

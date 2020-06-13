@@ -15,7 +15,7 @@
         if(curl_getinfo($ch, CURLINFO_HTTP_CODE) !== 200) {
             $date = new DateTime(date("Y-m-d H:i:s"));
             $getAPITime = date_format($date, 'U');
-
+            $json = $json[0]."\"date\":".$getAPITime.", ".substr($json, 1, strlen($json) - 1); //XD, ale działa - dodawanie daty do pliku z errorem
             file_put_contents("json/$key-$getAPITime.json", $json);
             $files = array_combine(glob("json/$key*"), array_map('filectime', glob("json/$key*")));
             arsort($files);
