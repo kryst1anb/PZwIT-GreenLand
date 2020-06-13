@@ -102,7 +102,7 @@ function drawChart(currency) {
       title: "Date",
     },
     axisY: {
-      title: "Value",
+      title: "Value ($)",
     },
     data: [
       {
@@ -112,7 +112,7 @@ function drawChart(currency) {
         //nullDataLineDashType: "solid",
         xValueType: "dateTime",
         xValueFormatString: "DD.MM.YYYY HH:MM TT",
-        yValueFormatString: "#,##0.##",
+        yValueFormatString: "$ #,##0.##",
         dataPoints: data,
       },
     ],
