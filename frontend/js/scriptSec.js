@@ -116,7 +116,7 @@ function drawChart(currency) {
 }
 
 function sendJSON() {
-  fetch("http://localhost:8080/pz/backend/server.php", {
+  fetch("../../backend/server.php", {
     method: "post",
     body: JSON.stringify({
       send: true,
