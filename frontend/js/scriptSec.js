@@ -87,9 +87,14 @@ function dataToDraw(currency) {
 
 function drawChart(currency) {
   //Rysowanie wykresu
+  document.getElementsByClassName("copyright")[0].style.position = "inherit";
+  document.getElementsByClassName("copyright")[0].style.marginBottom  = "70px";
+  document.getElementById("chartContainer").style.display = "block";
+  
   const data = dataToDraw(currency);
   const chart = new CanvasJS.Chart("chartContainer", {
     animationEnabled: true,
+    backgroundColor: "#ebebeb90",
     title: {
       text: "Chart of " + currency + " currency in compare to USD",
     },
@@ -158,6 +163,6 @@ function errorHandler(errorList) {
     para.className = "errorHandler";
     const node = document.createTextNode("Error: " + error.error.code + " " + error.error.message);
     para.appendChild(node);
-    document.getElementsByClassName("detail-btn-square")[0].appendChild(para);
+    document.getElementsByClassName("error-handler")[0].appendChild(para);
   });
 }

@@ -126,7 +126,7 @@ i {
   width: 350px;
   height: 30px;
   /* background-color: lightgray; */
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 #dropdown-currencies {
@@ -181,16 +181,10 @@ option {
 
 #chartContainer{
   margin: 0 auto;
-  margin-top: 30px;
+  margin-top: 50px;
   width: 80%;
-  background-color: aqua;
-}
-
-#chartContainer{
-  margin: 0 auto;
-  margin-top: 30px;
-  width: 80%;
-  background-color: aqua;
+  height: 600px;
+  display: none;
 }
 
 /* STATEMENTS (errors, first log) */
@@ -200,14 +194,10 @@ option {
   text-align: center;
   font-size: 19px;
   font-weight: bold;
-  /* display: block;
-  float: left; */
 }
 
 .errors-info-square {
   margin: 0 auto;
   width: 700px;
-  /* height: 30px; */
-  /* background-color: lightgray; */
   margin-top: 100px;
 }
