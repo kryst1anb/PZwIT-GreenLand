@@ -1,19 +1,54 @@
 window.onload = function () {
   checkAPIKey();
+  checkFirstLog();
   sendJSON();
 };
 
 function goToHomePage() {
+  // wylogowanie
   sessionStorage.clear();
   window.location.replace("index.html");
 }
 
 function checkAPIKey() {
+  // sprawdzane czy został podany klucz api
   if (sessionStorage.getItem("key") == null || sessionStorage.getItem("key") == "undefined") {
     goToHomePage();
   } else {
     document.getElementById("infoAPIKey").innerHTML = sessionStorage.getItem("key");
   }
+}
+
+function checkFirstLog() {
+  // Sprawdzenie czy logowanie z api nastąpiło wpierwszy raz jeżeli tak to leci komunikat i blokowane są przyciski jeżeli nie nic nie jest robione
+  const Http = new XMLHttpRequest();
+  Http.open("POST", "../../backend/firstLog.php", true);
+  Http.send(
+    JSON.stringify({
+      send: true,
+      key: sessionStorage.getItem("key"),
+    })
+  );
+  Http.onreadystatechange = function () {
+    console.log(Http.response);
+    if (Http.readyState === Http.DONE) {
+      if (Http.status === 200) {
+        window.response = Http.responseText;
+        if (window.response != "true") {
+          const para = document.createElement("p");
+          para.className = "errorHandlerFirstLog";
+          const node = document.createTextNode("It is your first login with this API Key, we do not have any currency data.");
+          para.appendChild(node);
+          document.getElementsByClassName("detail-btn-square")[0].appendChild(para);
+          document.getElementById("btn-export").remove();
+          document.getElementById("dropdown-currencies").remove();
+        }
+      } else {
+        errorHandler();
+        console.log("error");
+      }
+    }
+  };
 }
 
 function setUpDropdown() {
