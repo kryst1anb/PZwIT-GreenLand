@@ -90,7 +90,7 @@ function drawChart(currency) {
   document.getElementsByClassName("copyright")[0].style.position = "inherit";
   document.getElementsByClassName("copyright")[0].style.marginBottom  = "70px";
   document.getElementById("chartContainer").style.display = "block";
-  
+
   const data = dataToDraw(currency);
   const chart = new CanvasJS.Chart("chartContainer", {
     animationEnabled: true,
@@ -158,16 +158,7 @@ function sendJSON() {
 }
 
 function errorHandler(errorList) {
-  var dups = [];
-  var arr = errorList.filter(function (el) {
-    if (dups.indexOf(el.ID) == -1) {
-      dups.push(el.ID);
-      return true;
-    }
-    return false;
-  });
-
-  arr.forEach((error) => {
+  errorList.forEach((error) => {
     const para = document.createElement("p");
     para.className = "errorHandler";
     const node = document.createTextNode("Error: " + error.error.code + " " + error.error.message);
