@@ -89,7 +89,7 @@ function dataToDraw(currency) {
 function drawChart(currency) {
   //Rysowanie wykresu
   document.getElementsByClassName("copyright")[0].style.position = "inherit";
-  document.getElementsByClassName("copyright")[0].style.marginBottom  = "70px";
+  document.getElementsByClassName("copyright")[0].style.marginBottom = "70px";
   document.getElementById("chartContainer").style.display = "block";
 
   const data = dataToDraw(currency);
@@ -127,35 +127,39 @@ function sendJSON() {
     body: JSON.stringify({
       send: true,
       key: sessionStorage.getItem("key"),
-    })
+    }),
   })
-      .then(res => res.json())
-      .then(res => {
-        window.response = JSON.parse(res);
-        let resOk = [];
-        let resError = [];
-        response.forEach((object) => {
-          if(object.valid) {
-            resOk.push(object);
-          } else {
-            resError.push(object);
-          }
-        });
-        window.responseOk = resOk;
-        window.responseError = resError;
-        console.log(responseOk);
-        console.log(responseError);
-        if(resOk.length === 0) {
-          //TODO poczekaj na dane;
-          //TODO: blokowanie przycisku
-        }
-        if (resError.length !== 0){
-          errorHandler(resError);
-        }
-        if (responseOk.length !== 0) {
-          setUpDropdown();
+    .then((res) => res.json())
+    .then((res) => {
+      window.response = JSON.parse(res);
+      let resOk = [];
+      let resError = [];
+      response.forEach((object) => {
+        if (object.valid) {
+          resOk.push(object);
+        } else {
+          resError.push(object);
         }
       });
+      window.responseOk = resOk;
+      window.responseError = resError;
+      console.log(responseOk);
+      console.log(responseError);
+      if (resOk.length === 0) {
+        //TODO poczekaj na dane;
+        //TODO: blokowanie przycisku
+      }
+      if (resError.length !== 0) {
+        errorHandler(resError);
+      }
+      if (responseOk.length !== 0) {
+        setUpDropdown();
+      }
+    });
+}
+
+function checkData() {
+  (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
 }
 
 function errorHandler(errorList) {
@@ -165,9 +169,26 @@ function errorHandler(errorList) {
     const para = document.createElement("p");
     para.className = "errorHandler";
     const node = document.createTextNode(
-        date.getDay() + "-" + date.getMonth() + "-" + date.getFullYear() +  " " +
-        date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() +
-        " Error: " + error.error.code + " " + error.error.message
+      (date.getDay() < 10 ? "0" : "") +
+        date.getDay() +
+        "-" +
+        (date.getMonth() < 10 ? "0" : "") +
+        date.getMonth() +
+        "-" +
+        date.getFullYear() +
+        " " +
+        (date.getHours() < 10 ? "0" : "") +
+        date.getHours() +
+        ":" +
+        (date.getMinutes() < 10 ? "0" : "") +
+        date.getMinutes() +
+        ":" +
+        (date.getSeconds() < 10 ? "0" : "") +
+        date.getSeconds() +
+        " Error: " +
+        error.error.code +
+        " " +
+        error.error.message
     );
     para.appendChild(node);
     document.getElementsByClassName("error-handler")[0].appendChild(para);
