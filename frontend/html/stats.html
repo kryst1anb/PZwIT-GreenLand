@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="shortcut icon" href="../img/icon.png" />
+    <title>Statistics | GreenLand</title>
+    <script src="../js/scriptSec.js"></script>
+  </head>
+  <body>
+    <div class="detail-menu">
+      <button type="button" class="btn-home" onclick="goToHomePage();"><i class="glyphicon glyphicon-home"></i></button>
+
+      <p id="infoAPIKey"></p>
+      <img class="right-logo" src="../img/logo.png" alt="logo" />
+    </div>
+
+    <div class="error-handler"></div>
+
+    <div class="detail-btn-square">
+      <select id="dropdown-currencies" onchange="onChangeDropdown(this)">
+        <option>Select an item ...</option>
+      </select>
+
+      <button type="button" id="btn-export">EXPORT</button>
+    </div>
+    <div id="chartContainer"></div>
+
+    <div class="errors-info-square"></div>
+
+
+    <p class="copyright">Non-commercial project.Website created for the purpose of the student project - Silesian University of Technology.</p>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  </body>
+</html>
