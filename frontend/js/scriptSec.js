@@ -19,7 +19,7 @@ function checkAPIKey() {
 function setUpDropdown() {
   //Inicjalizacja dropdowna po wejściu do stats.html
   const dropDown = document.getElementById("dropdown-currencies");
-  const dropDownItems = Object.getOwnPropertyNames(response[0].rates);
+  const dropDownItems = Object.getOwnPropertyNames(responseOk[0].rates);
   dropDownItems.forEach((currency) => {
     const option = document.createElement("option");
     option.text = currency;
@@ -38,7 +38,7 @@ function onChangeDropdown(currency) {
 
 function dataToDraw(currency) {
   const data = [];
-  response.forEach((object) => {
+  responseOk.forEach((object) => {
     const date = new Date(object.updated * 1000);
     data.push({ x: date, y: object.rates[currency.toString()] });
   });
@@ -76,57 +76,48 @@ function drawChart(currency) {
 }
 
 function sendJSON() {
-  const Http = new XMLHttpRequest();
-  Http.open("POST", "../../backend/server.php", true);
-  Http.send(
-    JSON.stringify({
+  fetch("http://localhost:8080/pz/backend/server.php", {
+    method: "post",
+    body: JSON.stringify({
       send: true,
       key: sessionStorage.getItem("key"),
     })
-  );
-  Http.onreadystatechange = function () {
-    console.log(Http.response);
-    if (Http.readyState === Http.DONE) {
-      if (Http.status === 200) {
-        //200 to odpowiedź z php, nie z API walut
-        window.response = Http.responseText;
-        if (response.includes("Error")) {
-          errorHandler();
-          return;
-        } else {
-          window.response = JSON.stringify(Http.response);
+  })
+      .then(res => res.json())
+      .then(res => {
+        window.response = JSON.parse(res);
+        let resOk = [];
+        let resError = [];
+        response.forEach((object) => {
+          if(object.valid) {
+            resOk.push(object);
+          } else {
+            resError.push(object);
+          }
+        });
+        window.responseOk = resOk;
+        window.responseError = resError;
+        console.log(responseOk);
+        console.log(responseError);
+        if(resOk.length === 0) {
+          //TODO poczekaj na dane;
+          //TODO: blokowanie przycisku
         }
-        if (response.includes("Error")) {
-          errorHandler();
+        if (resError.length !== 0){
+          errorHandler(resError);
         }
-        if (response.length !== 0) {
+        if (responseOk.length !== 0) {
           setUpDropdown();
-        } else {
-          console.log("trzeba poczekać na dane");
-          //TODO: funkcja wypisująca komunikat o tym, że trzeba poczekać na dane
         }
-      } else {
-        errorHandler();
-        console.log("error");
-      }
-    }
-  };
+      });
 }
 
-function errorHandler() {
-  if (response.includes("Error")) {
-    const res = response.split("-");
+function errorHandler(errorList) {
+  errorList.forEach((error) => {
     const para = document.createElement("p");
     para.className = "errorHandler";
-    const node = document.createTextNode("Error " + res[1] + " - " + res[2]);
+    const node = document.createTextNode("Error: " + error.error.code + " " + error.error.message);
     para.appendChild(node);
     document.getElementsByClassName("detail-btn-square")[0].appendChild(para);
-    if (res[1] != 405) {
-      document.getElementById("btn-export").remove();
-      document.getElementById("dropdown-currencies").remove();
-      //TODO WYGLAD
-    }
-  } else {
-    //TODO jakiś uniwersalny komunikat typu "Oh, something went wrong ..."
-  }
+  });
 }
