@@ -1,0 +1,94 @@
+.detail-menu {
+    width: 100%;
+}
+
+.btn-home {
+    display: inline-block;
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    padding-top: 10px;
+}
+
+.btn-home i {
+    color: #a0a0a0d8;
+    font-size: 20px;
+}
+
+.btn-home i:hover {
+    color: #323232;
+}
+
+#infoAPIKey {
+    display: inline-block;
+    padding-top: 10px;
+    padding-left: 15px;
+    font-weight: bold;
+    font-size: 13px;
+    color: #797979d8;
+}
+
+.right-logo {
+    float: right;
+    width: 150px;
+}
+
+.detail-btn-square {
+    margin: 0 auto;
+    width: 350px;
+    /* background-color: lightgray; */
+    margin-top: 100px;
+}
+
+#dropdown-currencies {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    float: left;
+    width: 150px;
+    height: 30px;
+    text-align-last: center;
+
+    background-color: rgba(255, 255, 255, 0.5);
+    background-repeat: no-repeat;
+    border: 3px solid #323232;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    font-weight: bold;
+}
+
+option {
+    text-align: center;
+    font-weight: bold;
+}
+
+#btn-export {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    float: right;
+    width: 150px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.5);
+    background-repeat: no-repeat;
+    border: 3px solid #323232;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    font-weight: bold;
+}
+
+/* #btn-export:hover{
+    background-color: rgba(228, 228, 228, 0.4);
+} */
+
+.errorHandler {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 70px;
+}
