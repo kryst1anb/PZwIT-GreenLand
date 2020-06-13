@@ -37,9 +37,14 @@ function checkFirstLog() {
         if (window.response != "true") {
           const para = document.createElement("p");
           para.className = "errorHandlerFirstLog";
-          const node = document.createTextNode("It is your first login with this API Key, we do not have any currency data.");
+
+          const para2 = document.createElement("i");
+          para2.className = "glyphicon glyphicon-globe";
+
+          const node = document.createTextNode("It is your first login with this API Key, we do not have any currency data");
           para.appendChild(node);
-          document.getElementsByClassName("detail-btn-square")[0].appendChild(para);
+          document.getElementsByClassName("errors-info-square")[0].appendChild(para);
+          document.getElementsByClassName("errorHandlerFirstLog")[0].appendChild(para2);
           document.getElementById("btn-export").remove();
           document.getElementById("dropdown-currencies").remove();
         }
