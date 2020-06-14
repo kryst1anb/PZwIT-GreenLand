@@ -31,7 +31,6 @@ function checkFirstLog() {
     })
   );
   Http.onreadystatechange = function () {
-    console.log(Http.response);
     if (Http.readyState === Http.DONE) {
       if (Http.status === 200) {
         window.response = Http.responseText;
@@ -122,7 +121,7 @@ function drawChart(currency) {
 }
 
 function sendJSON() {
-  fetch("../../backend/server.php", {
+  fetch("../../backend/errorServer.php", {
     method: "post",
     body: JSON.stringify({
       send: true,
@@ -143,8 +142,6 @@ function sendJSON() {
       });
       window.responseOk = resOk;
       window.responseError = resError;
-      console.log(responseOk);
-      console.log(responseError);
       if (resOk.length === 0) {
         //TODO poczekaj na dane;
         //TODO: blokowanie przycisku
