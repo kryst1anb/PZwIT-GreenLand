@@ -105,22 +105,10 @@ function drawChart(currency) {
     },
     axisX: {
       title: "Date",
-      crosshair: {
-        enabled: true,
-        snapToDataPoint: true,
-      },
     },
     axisY: {
-      title: "Value ($)",
-      suffix: "$",
+      title: "Value",
       includeZero: false,
-      crosshair: {
-        enabled: true,
-        snapToDataPoint: true,
-        labelFormatter: function (e) {
-          return "$" + CanvasJS.formatNumber(e.value, "#,##0.#######");
-        },
-      },
     },
     data: [
       {
@@ -129,7 +117,7 @@ function drawChart(currency) {
         connectNullData: true,
         xValueType: "dateTime",
         xValueFormatString: "DD.MM.YYYY HH:MM TT",
-        yValueFormatString: "#,##0.#######",
+        yValueFormatString: "#,##0.####### " + currency,
         dataPoints: data,
       },
     ],

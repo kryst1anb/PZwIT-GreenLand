@@ -1,12 +1,14 @@
 <?php
-    $rawdata = file_get_contents("php://input");
+   error_reporting(E_ALL); 
+   
+   $rawdata = file_get_contents("php://input");
     $dataJSON = json_decode($rawdata,true);
     $key = $dataJSON['key'];
     set_time_limit(0);
 
     if($dataJSON['send']){
-        while (true){
-            sleep(3600);
+       while (true){
+           sleep(3600);
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, "https://currencyapi.net/api/v1/rates?key=$key");
@@ -20,32 +22,14 @@
                 $getAPITime = date_format($date, 'U');
     
                 $json = $json[0]."\"date\":".$getAPITime.", ".substr($json, 1, strlen($json) - 1);
-                file_put_contents("json/$key-$getAPITime.json", $json);
-    
-                // $files = array_combine(glob("json/$key*"), array_map('filectime', glob("json/$key*")));
-                // arsort($files);
-    
-                // $jsonDataToJS = '[';
-                // foreach($files as $k => $v){
-                //     $jsonDataToJS .= file_get_contents($k, true).',';
-                // }
-                // $jsonDataToJS = substr($jsonDataToJS, 0, -1);
-                // $jsonDataToJS .= ']';
-                // print_r(json_encode($jsonDataToJS, true));
+                file_put_contents("json/$key-$getAPITime.json", $json, LOCK_EX);
+                chmod("json/$key-$getAPITime.json", 0644);
+
             } else {
                 $getAPITime = $obj['updated'];
-                file_put_contents("json/$key-$getAPITime.json", $json);
-    
-                // $files = array_combine(glob("json/$key*"), array_map('filectime', glob("json/$key*")));
-                // arsort($files);
-    
-                // $jsonDataToJS = '[';
-                // foreach($files as $k => $v){
-                //     $jsonDataToJS .= file_get_contents($k, true).',';
-                // }
-                // $jsonDataToJS = substr($jsonDataToJS, 0, -1);
-                // $jsonDataToJS .= ']';
-                // print_r(json_encode($jsonDataToJS, true));
+                file_put_contents("json/$key-$getAPITime.json", $json, LOCK_EX);
+                chmod("json/$key-$getAPITime.json", 0644);
+
             }
             curl_close($ch);;
         }
