@@ -65,6 +65,7 @@ function setUpDropdown() {
   const dropDownItems = Object.getOwnPropertyNames(responseOk[0].rates);
   dropDownItems.forEach((currency) => {
     const option = document.createElement("option");
+    option.id = currency;
     option.text = currency;
     dropDown.appendChild(option);
   });
@@ -117,7 +118,7 @@ function drawChart(currency) {
         enabled: true,
         snapToDataPoint: true,
         labelFormatter: function (e) {
-          return "$" + CanvasJS.formatNumber(e.value, "##0.00");
+          return "$" + CanvasJS.formatNumber(e.value, "#,##0.#######");
         },
       },
     },
@@ -174,7 +175,7 @@ function sendJSON(serverFileName, firstUse) {
         }
         document.getElementById("btn-export").style.display = "block";
         document.getElementById("dropdown-currencies").style.display = "block";
-        document.getElementsByClassName("errorHandlerFirstLog")[0].innerHTML = "";
+        if (document.getElementsByClassName("errorHandlerFirstLog")[0]) document.getElementsByClassName("errorHandlerFirstLog")[0].innerHTML = "";
       } else {
         return;
       }
