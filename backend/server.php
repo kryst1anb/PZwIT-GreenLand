@@ -31,7 +31,7 @@
                 chmod("json/$key-$getAPITime.json", 0644);
 
             }
-            curl_close($ch);;
+            curl_close($ch);
         }
      } else {
           header("Location: http://www.google.com");
