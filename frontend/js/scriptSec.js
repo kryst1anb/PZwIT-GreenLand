@@ -108,7 +108,7 @@ function drawChart(currency) {
         //nullDataLineDashType: "solid",
         xValueType: "dateTime",
         xValueFormatString: "DD.MM.YYYY HH:MM TT",
-        yValueFormatString: "$ #,##0.##",
+        yValueFormatString: "#,##0.##",
         dataPoints: data,
       },
     ],
