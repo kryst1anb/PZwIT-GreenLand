@@ -2,7 +2,6 @@ window.onload = function () {
   document.getElementById("errorHandlerMessagesContainer").style.display = "none";
   checkAPIKey();
   checkFirstLog();
-  sendJSON();
 };
 
 function goToHomePage() {
@@ -22,19 +21,16 @@ function checkAPIKey() {
 
 function checkFirstLog() {
   // Sprawdzenie czy logowanie z api nastąpiło wpierwszy raz jeżeli tak to leci komunikat i blokowane są przyciski jeżeli nie nic nie jest robione
-  const Http = new XMLHttpRequest();
-  Http.open("POST", "../../backend/firstLog.php", true);
-  Http.send(
-    JSON.stringify({
+  fetch("../../backend/firstLog.php", {
+    method: "post",
+    body: JSON.stringify({
       send: true,
       key: sessionStorage.getItem("key"),
-    })
-  );
-  Http.onreadystatechange = function () {
-    if (Http.readyState === Http.DONE) {
-      if (Http.status === 200) {
-        window.response = Http.responseText;
-        if (window.response != "true") {
+    }),
+  })
+      .then((res) => res.json())
+      .then((res) => {
+        if(!res) {
           const para = document.createElement("p");
           para.className = "errorHandlerFirstLog";
 
@@ -45,15 +41,14 @@ function checkFirstLog() {
           para.appendChild(node);
           document.getElementsByClassName("errors-info-square")[0].appendChild(para);
           document.getElementsByClassName("errorHandlerFirstLog")[0].appendChild(para2);
-          document.getElementById("btn-export").remove();
-          document.getElementById("dropdown-currencies").remove();
+          document.getElementById("btn-export").style.display = "none";
+          document.getElementById("dropdown-currencies").style.display = "none";
+          sendJSON("server.php", true);
+        } else {
+          sendJSON("errorServer.php", false);
+          sendJSON("server.php", true);
         }
-      } else {
-        errorHandler();
-        console.log("error");
-      }
-    }
-  };
+      });
 }
 
 function setUpDropdown() {
@@ -70,6 +65,7 @@ function setUpDropdown() {
 function onChangeDropdown(currency) {
   //Zmiana waluty na dropdownie przez użytkownika
   if (currency.value !== "Select an item ...") {
+    sessionStorage.setItem("selectedCurrency", currency.value);
     drawChart(currency.value);
   } else {
     document.getElementById("chartContainer").innerText = "";
@@ -120,8 +116,8 @@ function drawChart(currency) {
   chart.render();
 }
 
-function sendJSON() {
-  fetch("../../backend/errorServer.php", {
+function sendJSON(serverFileName, firstUse) {
+  fetch("../../backend/" + serverFileName, {
     method: "post",
     body: JSON.stringify({
       send: true,
@@ -130,29 +126,44 @@ function sendJSON() {
   })
     .then((res) => res.json())
     .then((res) => {
-      window.response = JSON.parse(res);
-      let resOk = [];
-      let resError = [];
-      response.forEach((object) => {
-        if (object.valid) {
-          resOk.push(object);
-        } else {
-          resError.push(object);
+      if(!firstUse){
+        window.response = JSON.parse(res);
+        let resOk = [];
+        let resError = [];
+        response.forEach((object) => {
+          if (object.valid) {
+            resOk.push(object);
+          } else {
+            resError.push(object);
+          }
+        });
+        window.responseOk = resOk;
+        window.responseError = resError;
+        if (resOk.length === 0) {
+          //TODO poczekaj na dane;
+          //TODO: blokowanie przycisku
         }
-      });
-      window.responseOk = resOk;
-      window.responseError = resError;
-      if (resOk.length === 0) {
-        //TODO poczekaj na dane;
-        //TODO: blokowanie przycisku
+        if (resError.length !== 0) {
+          errorHandler(resError);
+        }
+        if (responseOk.length !== 0) {
+          setUpDropdown();
+        }
+        if(sessionStorage.getItem("selectedCurrency")) {
+          drawChart(sessionStorage.getItem("selectedCurrency"));
+        }
+        document.getElementById("btn-export").style.display = "block";
+        document.getElementById("dropdown-currencies").style.display = "block";
+        document.getElementsByClassName("errorHandlerFirstLog")[0].innerHTML = "";
+      } else {
+        return;
       }
-      if (resError.length !== 0) {
-        errorHandler(resError);
-      }
-      if (responseOk.length !== 0) {
-        setUpDropdown();
-      }
-    });
+    })
+    .then(
+        setTimeout(() => {
+          sendJSON("errorServer.php", false);
+        }, 3600000)
+    );
 }
 
 function checkData(data) {
