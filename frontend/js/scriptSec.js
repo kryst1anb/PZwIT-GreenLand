@@ -106,25 +106,14 @@ function dataToDraw(currency) {
 }
 
 function exportData() {
+  //funkcja odpowiedzialna za eksport danych
   console.log("ELo");
-  const data = [];
-  //dropDownItems = Object.getOwnPropertyNames(responseOk[0].rates);
-  // console.log(responseOk[0].rates);
+  let wart = [];
   responseOk.forEach((object) => {
-    //console.log(dropDownItems);
-    //const date = new Date(object.updated * 1000);
-    // data.push({ x: date, y: object.rates[currency] });
-    //console.log(dropDownItems + " " + object.rates);
     console.log(object.rates);
+    wart.push(object.rates);
   });
-  /*
-  dropDownItems.forEach((currency) => {
-    const option = document.createElement("option");
-    option.id = currency;
-    option.text = currency;
-    dropDown.appendChild(option);
-  });
-  */
+  console.log(wart);
 }
 
 function drawChart(currency) {
