@@ -18,11 +18,17 @@
                 $date = new DateTime(date("Y-m-d H:i:s"));
                 $getAPITime = date_format($date, 'U'); 
                 $json = $json[0]."\"date\":".$getAPITime.", ".substr($json, 1, strlen($json) - 1);
-                file_put_contents("json/$key-$getAPITime.json", $json);
+                //file_put_contents("json/$key-$getAPITime.json", $json);
+                $fp = fopen("json/$key-$getAPITime.json","w");
+                fwrite($fp,$json);
+                fclose($fp);
 
             } else {
                 $getAPITime = $obj['updated'];
-                file_put_contents("json/$key-$getAPITime.json", $json);
+                //file_put_contents("json/$key-$getAPITime.json", $json);
+                $fp = fopen("json/$key-$getAPITime.json","w");
+                fwrite($fp,$json);
+                fclose($fp);
             }
             curl_close($ch);
         }
