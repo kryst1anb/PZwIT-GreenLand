@@ -163,7 +163,7 @@ function sendJSON(serverFileName, firstUse) {
         }
         document.getElementById("btn-export").style.display = "block";
         document.getElementById("dropdown-currencies").style.display = "block";
-        if (document.getElementsByClassName("errorHandlerFirstLog")[0]) document.getElementsByClassName("errorHandlerFirstLog")[0].innerHTML = "";
+        document.getElementsByClassName("errorHandlerFirstLog")[0].innerHTML = "";
       } else {
         return;
       }
