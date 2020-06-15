@@ -1,9 +1,13 @@
 window.onload = function () {
-  document.getElementById("errorHandlerMessagesContainer").style.display = "none";
+  document.getElementById("errorHandlerMessagesContainer").style.display =
+    "none";
   checkAPIKey();
   checkFirstLog();
   if (sessionStorage.getItem("selectedCurrency") != null) {
-    selectElement("dropdown-currencies", sessionStorage.getItem("selectedCurrency"));
+    selectElement(
+      "dropdown-currencies",
+      sessionStorage.getItem("selectedCurrency")
+    );
   }
 };
 
@@ -20,10 +24,15 @@ function goToHomePage() {
 
 function checkAPIKey() {
   // sprawdzane czy został podany klucz api
-  if (sessionStorage.getItem("key") == null || sessionStorage.getItem("key") == "undefined") {
+  if (
+    sessionStorage.getItem("key") == null ||
+    sessionStorage.getItem("key") == "undefined"
+  ) {
     goToHomePage();
   } else {
-    document.getElementById("infoAPIKey").innerHTML = sessionStorage.getItem("key");
+    document.getElementById("infoAPIKey").innerHTML = sessionStorage.getItem(
+      "key"
+    );
   }
 }
 
@@ -45,10 +54,16 @@ function checkFirstLog() {
         const para2 = document.createElement("i");
         para2.className = "glyphicon glyphicon-globe";
 
-        const node = document.createTextNode("It is your first login with this API Key, we do not have any currency data");
+        const node = document.createTextNode(
+          "It is your first login with this API Key, we do not have any currency data"
+        );
         para.appendChild(node);
-        document.getElementsByClassName("errors-info-square")[0].appendChild(para);
-        document.getElementsByClassName("errorHandlerFirstLog")[0].appendChild(para2);
+        document
+          .getElementsByClassName("errors-info-square")[0]
+          .appendChild(para);
+        document
+          .getElementsByClassName("errorHandlerFirstLog")[0]
+          .appendChild(para2);
         document.getElementById("btn-export").style.display = "none";
         document.getElementById("dropdown-currencies").style.display = "none";
         sendJSON("server.php", true);
@@ -88,6 +103,28 @@ function dataToDraw(currency) {
     data.push({ x: date, y: object.rates[currency.toString()] });
   });
   return data;
+}
+
+function exportData() {
+  console.log("ELo");
+  const data = [];
+  //dropDownItems = Object.getOwnPropertyNames(responseOk[0].rates);
+  // console.log(responseOk[0].rates);
+  responseOk.forEach((object) => {
+    //console.log(dropDownItems);
+    //const date = new Date(object.updated * 1000);
+    // data.push({ x: date, y: object.rates[currency] });
+    //console.log(dropDownItems + " " + object.rates);
+    console.log(object.rates);
+  });
+  /*
+  dropDownItems.forEach((currency) => {
+    const option = document.createElement("option");
+    option.id = currency;
+    option.text = currency;
+    dropDown.appendChild(option);
+  });
+  */
 }
 
 function drawChart(currency) {
@@ -163,7 +200,8 @@ function sendJSON(serverFileName, firstUse) {
         }
         document.getElementById("btn-export").style.display = "block";
         document.getElementById("dropdown-currencies").style.display = "block";
-        document.getElementsByClassName("errorHandlerFirstLog")[0].innerHTML = "";
+        document.getElementsByClassName("errorHandlerFirstLog")[0].innerHTML =
+          "";
       } else {
         return;
       }
@@ -180,7 +218,8 @@ function checkData(data) {
 }
 
 function errorHandler(errorList) {
-  document.getElementById("errorHandlerMessagesContainer").style.display = "block";
+  document.getElementById("errorHandlerMessagesContainer").style.display =
+    "block";
   errorList.forEach((error) => {
     let date = new Date(error.date * 1000);
     const para = document.createElement("p");
