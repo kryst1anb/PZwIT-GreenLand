@@ -163,6 +163,7 @@ function sendJSON(serverFileName, firstUse) {
         }
         document.getElementById("btn-export").style.display = "block";
         document.getElementById("dropdown-currencies").style.display = "block";
+        document.getElementsByClassName("errorHandlerFirstLog")[0].innerHTML = "";
       } else {
         return;
       }
