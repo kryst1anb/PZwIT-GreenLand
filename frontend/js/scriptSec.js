@@ -186,9 +186,9 @@ function errorHandler(errorList) {
     const para = document.createElement("p");
     para.className = "errorHandler";
     const node = document.createTextNode(
-      checkData(date.getDay()) +
+      checkData(date.getDate()) +
         "-" +
-        checkData(date.getMonth()) +
+        checkData(date.getMonth() + 1) +
         "-" +
         date.getFullYear() +
         " " +
