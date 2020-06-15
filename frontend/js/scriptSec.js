@@ -171,7 +171,7 @@ function sendJSON(serverFileName, firstUse) {
     .then(
       setTimeout(() => {
         sendJSON("errorServer.php", false);
-      }, 3600000)
+      }, 60000)
     );
 }
 
