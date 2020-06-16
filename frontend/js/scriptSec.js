@@ -2,14 +2,26 @@ window.onload = function () {
   document.getElementById("errorHandlerMessagesContainer").style.display = "none";
   checkAPIKey();
   checkFirstLog();
-  if (sessionStorage.getItem("selectedCurrency") != null) {
-    selectElement("dropdown-currencies", sessionStorage.getItem("selectedCurrency"));
-  }
 };
 
-function selectElement(id, valueToSelect) {
-  var element = document.getElementById(id);
-  element.value = valueToSelect;
+function selectDropDownValueAfterRefresh (currency){
+  if (sessionStorage.getItem("selectedCurrency") != null) {
+    let i = 1; //bo 0 to Select an item ...
+    if(responseOk){
+      const dropDownItems = Object.getOwnPropertyNames(responseOk[0].rates);
+      for(let el of dropDownItems){
+        console.log(el + " " + currency);
+        if(el === currency){
+          break;
+        } else {
+          i++;
+        }
+      }
+      document.getElementById("dropdown-currencies").options.selectedIndex = i;
+      return true;
+    }
+  }
+  return false;
 }
 
 function goToHomePage() {
@@ -159,7 +171,9 @@ function sendJSON(serverFileName, firstUse) {
           setUpDropdown();
         }
         if (sessionStorage.getItem("selectedCurrency")) {
-          drawChart(sessionStorage.getItem("selectedCurrency"));
+          if(selectDropDownValueAfterRefresh(sessionStorage.getItem("selectedCurrency"))){
+            drawChart(sessionStorage.getItem("selectedCurrency"));
+          }
         }
         document.getElementById("btn-export").style.display = "block";
         document.getElementById("dropdown-currencies").style.display = "block";
