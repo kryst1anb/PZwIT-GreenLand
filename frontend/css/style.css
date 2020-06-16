@@ -172,7 +172,7 @@ option {
     background-color: rgba(228, 228, 228, 0.4);
 } */
 
-.errorHandler {
+#errorHandler {
   color: #b30000;
   font-weight: bold;
   padding: 0;

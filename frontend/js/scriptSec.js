@@ -196,11 +196,19 @@ function checkData(data) {
 
 function errorHandler(errorList) {
   let dateToString = "";
+  const root = document.getElementById("error-handler");
+  const childrens = document.getElementById("error-handler").children;
+  if(childrens.length > 0) {
+    for (let i = 0; i < childrens.length;) {
+      root.removeChild(childrens[i]);
+    }
+  }
+
   document.getElementById("errorHandlerMessagesContainer").style.display = "block";
   errorList.forEach((error) => {
     let date = new Date(error.date * 1000);
     const para = document.createElement("p");
-    para.className = "errorHandler";
+    para.id = "errorHandler";
     const node = document.createTextNode(
         getDate(date) +
         " Error: " +
@@ -210,7 +218,7 @@ function errorHandler(errorList) {
     );
     para.appendChild(node);
     dateToString = date.toLocaleString().split(",");
-    document.getElementsByClassName("error-handler")[0].appendChild(para);
+    document.getElementById("error-handler").appendChild(para);
   })
 }
 
