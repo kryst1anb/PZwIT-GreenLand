@@ -10,7 +10,6 @@ function selectDropDownValueAfterRefresh (currency){
     if(responseOk){
       const dropDownItems = Object.getOwnPropertyNames(responseOk[0].rates);
       for(let el of dropDownItems){
-        console.log(el + " " + currency);
         if(el === currency){
           break;
         } else {
