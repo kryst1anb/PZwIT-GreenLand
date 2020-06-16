@@ -199,17 +199,7 @@ function errorHandler(errorList) {
     const para = document.createElement("p");
     para.className = "errorHandler";
     const node = document.createTextNode(
-      checkData(date.getDate()) +
-        "-" +
-        checkData(date.getMonth() + 1) +
-        "-" +
-        date.getFullYear() +
-        " " +
-        checkData(date.getHours()) +
-        ":" +
-        checkData(date.getMinutes()) +
-        ":" +
-        checkData(date.getSeconds()) +
+        getDate(date) +
         " Error: " +
         error.error.code +
         " " +
@@ -218,4 +208,49 @@ function errorHandler(errorList) {
     para.appendChild(node);
     document.getElementsByClassName("error-handler")[0].appendChild(para);
   });
+}
+
+function getDate(date){
+  return date.getDate() +
+      "-" +
+      checkData(date.getMonth() + 1) +
+      "-" +
+      date.getFullYear() +
+      " " +
+      checkData(date.getHours()) +
+      ":" +
+      checkData(date.getMinutes()) +
+      ":" +
+      checkData(date.getSeconds())
+}
+
+function exportData() {
+  //Pierwszy wiersz
+  const currencies = Object.getOwnPropertyNames(responseOk[0].rates);
+  var data = [
+    [ "---",  currencies]
+  ];
+  //kolejne wiersze
+  responseOk.forEach((response) => {
+    const date = new Date(response.updated * 1000);
+    let newRow = [getDate(date)];
+    for(const key in response.rates){
+      //pojedynczy wiersz
+      newRow.push(response.rates[key]);
+    }
+    data.push(newRow);
+  });
+
+  //Eksport danych
+  var csv = 'GreenLand$,All data export\n';
+  data.forEach(function(row) {
+    csv += row.join(',');
+    csv += "\n";
+  });
+
+  var hiddenElement = document.createElement('a');
+  hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+  hiddenElement.target = '_blank';
+  hiddenElement.download = 'currencies.csv';
+  hiddenElement.click();
 }
