@@ -2,7 +2,6 @@ window.onload = function () {
   document.getElementById("errorHandlerMessagesContainer").style.display = "none";
   checkAPIKey();
   checkFirstLog();
-  firstCheckError = true;
 };
 
 function selectDropDownValueAfterRefresh(currency) {
@@ -197,7 +196,6 @@ function checkData(data) {
 
 function errorHandler(errorList) {
   let dateToString = "";
-  if (firstCheckError) {
   document.getElementById("errorHandlerMessagesContainer").style.display = "block";
   errorList.forEach((error) => {
     let date = new Date(error.date * 1000);
@@ -213,12 +211,7 @@ function errorHandler(errorList) {
     para.appendChild(node);
     dateToString = date.toLocaleString().split(",");
     document.getElementsByClassName("error-handler")[0].appendChild(para);
-    firstCheckError = false;
   })
-  } else {
-    let v = document.getElementsByClassName("errorHandler")[0];
-    if (!v.innerText.match(dateToString[0] && dateToString[1])) document.getElementsByClassName("error-handler")[0].appendChild(para);
-  }
 }
 
 function getDate(date){
